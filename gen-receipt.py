@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 import logging
 
-DEFAULT_TEMPLATE="templates/single.odt"
-DEFAULT_OUTPUT="new.pdf"
-LOGLEVEL=logging.INFO
+DEFAULT_TEMPLATE = "templates/single.odt"
+DEFAULT_OUTPUT = "new.pdf"
+LOGLEVEL = logging.INFO
 
 """gen-receipt.py
 
@@ -38,7 +38,8 @@ THE SOFTWARE.
 """
 
 import string
-import getopt, sys
+import getopt
+import sys
 import uno
 
 import click
@@ -58,21 +59,28 @@ from com.sun.star.beans import PropertyValue
 from com.sun.star.uno import Exception as UnoException
 from com.sun.star.io import IOException, XOutputStream
 
-class OutputStream( Base, XOutputStream ):
-    def __init__( self ):
+
+class OutputStream(Base, XOutputStream):
+
+    def __init__(self):
         self.closed = 0
+
     def closeOutput(self):
         self.closed = 1
-    def writeBytes( self, seq ):
-        sys.stdout.write( seq.value )
-    def flush( self ):
+
+    def writeBytes(self, seq):
+        sys.stdout.write(seq.value)
+
+    def flush(self):
         pass
+
 
 def findInDoc(doc, searchstring):
     searchDescriptor = doc.createSearchDescriptor()
     searchDescriptor.SearchCaseSensitive = True
     searchDescriptor.SearchString = searchstring
     return doc.findFirst(searchDescriptor)
+
 
 def replaceInDoc(doc, old, new):
     searchDescriptor = doc.createSearchDescriptor()
@@ -84,6 +92,7 @@ def replaceInDoc(doc, old, new):
     while found:
         found.String = new
         found = doc.findNext(found.End, searchDescriptor)
+
 
 @click.command()
 @click.argument('amount', type=float)
@@ -111,36 +120,38 @@ def cli(amount, address, donation_date, template, outputfile):
         logging.info("Trying to connect to Libreoffice...")
         url = "uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext"
         filterName = "writer_pdf_Export"
-        extension  = "pdf"
+        extension = "pdf"
 
         ctxLocal = uno.getComponentContext()
         smgrLocal = ctxLocal.ServiceManager
 
         resolver = smgrLocal.createInstanceWithContext(
-                 "com.sun.star.bridge.UnoUrlResolver", ctxLocal )
-        ctx = resolver.resolve( url )
+            "com.sun.star.bridge.UnoUrlResolver", ctxLocal)
+        ctx = resolver.resolve(url)
         smgr = ctx.ServiceManager
 
-        desktop = smgr.createInstanceWithContext("com.sun.star.frame.Desktop", ctx )
+        desktop = smgr.createInstanceWithContext(
+            "com.sun.star.frame.Desktop", ctx)
 
-        cwd = systemPathToFileUrl( getcwd() )
+        cwd = systemPathToFileUrl(getcwd())
         outProps = (
-            PropertyValue( "FilterName" , 0, filterName , 0 ),
-            PropertyValue( "SelectPdfVersion", 0, "1", 0 ),
-	        PropertyValue( "Overwrite" , 0, True , 0 ),
-            PropertyValue( "OutputStream", 0, OutputStream(), 0)
-	    )
+            PropertyValue("FilterName", 0, filterName, 0),
+            PropertyValue("SelectPdfVersion", 0, "1", 0),
+            PropertyValue("Overwrite", 0, True, 0),
+            PropertyValue("OutputStream", 0, OutputStream(), 0)
+        )
 
-        inProps = PropertyValue( "Hidden" , 0 , True, 0 ),
+        inProps = PropertyValue("Hidden", 0, True, 0),
 
         logging.info("Loading " + DEFAULT_TEMPLATE + "...")
 
-        fileUrl = absolutize(cwd, systemPathToFileUrl(DEFAULT_TEMPLATE) )
+        fileUrl = absolutize(cwd, systemPathToFileUrl(DEFAULT_TEMPLATE))
         try:
-            doc = desktop.loadComponentFromURL( fileUrl , "_blank", 0, inProps )
+            doc = desktop.loadComponentFromURL(fileUrl, "_blank", 0, inProps)
 
             if not doc:
-                raise UnoException( "Couldn't open stream for unknown reason", None )
+                raise UnoException(
+                    "Couldn't open stream for unknown reason", None)
 
             logging.info('Replacing strings in ' + DEFAULT_TEMPLATE)
 
@@ -151,25 +162,27 @@ def cli(amount, address, donation_date, template, outputfile):
             replaceInDoc(doc, '_AMOUNTINWORDS', amount_words)
             replaceInDoc(doc, '_DONATIONDATE', donation_date)
 
-            destUrl = absolutize( cwd, systemPathToFileUrl(DEFAULT_OUTPUT) )
+            destUrl = absolutize(cwd, systemPathToFileUrl(DEFAULT_OUTPUT))
             logging.info("Writing to " + DEFAULT_OUTPUT + "...")
             doc.storeToURL(destUrl, outProps)
         except IOException as e:
-            sys.stderr.write( "Error during conversion: " + e.Message + "\n" )
+            sys.stderr.write("Error during conversion: " + e.Message + "\n")
             retVal = 1
         except UnoException as e:
-            sys.stderr.write( "Error ("+repr(e.__class__)+") during conversion:" + e.Message + "\n" )
+            sys.stderr.write(
+                "Error (" + repr(e.__class__) + ") during conversion:" + e.Message + "\n")
             retVal = 1
         if doc:
             doc.dispose()
 
     except UnoException as e:
-        sys.stderr.write( "Error ("+repr(e.__class__)+") :" + e.Message + "\n" )
+        sys.stderr.write(
+            "Error (" + repr(e.__class__) + ") :" + e.Message + "\n")
         retVal = 1
 
     sys.exit(retVal)
 
 if __name__ == '__main__':
     logging.basicConfig(level=LOGLEVEL)
-    locale.setlocale(locale.LC_MONETARY, ('de','utf-8'))
+    locale.setlocale(locale.LC_MONETARY, ('de', 'utf-8'))
     cli()
