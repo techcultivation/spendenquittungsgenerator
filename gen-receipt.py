@@ -135,9 +135,12 @@ def cli(amount, address, donation_date, template, outputfile):
             "com.sun.star.frame.Desktop", ctx)
 
         cwd = systemPathToFileUrl(getcwd())
+        filterData = (
+            PropertyValue("SelectPdfVersion", 0, 1, 0),
+        )
         outProps = (
             PropertyValue("FilterName", 0, filterName, 0),
-            PropertyValue("SelectPdfVersion", 0, "1", 0),
+            PropertyValue("FilterData", 0, uno.Any("[]com.sun.star.beans.PropertyValue", tuple(filterData)), 0),
             PropertyValue("Overwrite", 0, True, 0),
             PropertyValue("OutputStream", 0, OutputStream(), 0)
         )
