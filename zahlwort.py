@@ -35,21 +35,26 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-from math import floor,modf
+from math import floor, modf
 import click
 
-NUMERALS=['null', 'ein', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun',
+NUMERALS = [
+    'null', 'ein', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun',
           'zehn', 'elf', 'zwölf', 'drei~', 'vier~',
           'fünf~', 'sech~', 'sieb~', 'acht~', 'neun~']
-TENNER=['','','zwanzig', 'dreißig', 'vierzig', 'fünfzig', 'sechzig', 'siebzig', 'achtzig', 'neunzig']
-GROUP_SUFFIX=[['',''],['tausend','tausend'], ['e Million ',' Millionen '],['e Milliarde ',' Milliarden ']]
-NUMERAL_SIGN='minus'
-INFIX='und'
-HUNDREDS_SUFFIX='hundert'
+TENNER = ['', '', 'zwanzig', 'dreißig', 'vierzig',
+          'fünfzig', 'sechzig', 'siebzig', 'achtzig', 'neunzig']
+GROUP_SUFFIX = [['', ''], ['tausend', 'tausend'],
+                ['e Million ', ' Millionen '], ['e Milliarde ', ' Milliarden ']]
+NUMERAL_SIGN = 'minus'
+INFIX = 'und'
+HUNDREDS_SUFFIX = 'hundert'
+
 
 def num2text_group(number, group_level=0):
-    if (number==0): return ''
-    group_number = number % 1000;
+    if (number == 0):
+        return ''
+    group_number = number % 1000
     res = ''
 
     if (group_number == 1):
@@ -83,24 +88,27 @@ def num2text_group(number, group_level=0):
 
     return num2text_group(number, group_level) + res
 
+
 def num2text(number):
-    prefix=''
+    prefix = ''
     if (number == 0):
-        return NUMERALS[0] # null
+        return NUMERALS[0]  # null
     if (number < 0):
-        prefix = NUMERAL_SIGN + ' ' # minus …
+        prefix = NUMERAL_SIGN + ' '  # minus …
     return prefix + num2text_group(abs(number))
 
     click.echo(zahl)
+
 
 def float2text(number_float):
     cent, euro = modf(number_float)
     cent = round(cent * 100)
     zahlwort = num2text(int(euro)) + ' Euro'
-    if (cent>0):
+    if (cent > 0):
         zahlwort += ' und ' + num2text(int(cent)) + ' Cent'
     zahlwort = zahlwort[0].upper() + zahlwort[1:]
     return zahlwort
+
 
 @click.command()
 @click.argument('zahl', type=float)
