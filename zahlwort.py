@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: latin-1 -*-
+# -*- coding: utf-8 -*-
 
 """zahlwort.py outputs a string that describes a float in German words (Euros)
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 import logging
 
 DEFAULT_TEMPLATE = "templates/single.odt"
