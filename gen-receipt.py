@@ -159,9 +159,9 @@ def cli(amount, address, donation_date, template, outputfile):
 
             logging.info('Replacing strings in ' + DEFAULT_TEMPLATE)
 
-            replaceInDoc(doc, '_ADDRESSEE', addressee)
+            replaceInDoc(doc, '_ADDRESSBOX', addressee)
 
-            replaceInDoc(doc, '_FULLADDRESS', addressline)
+            replaceInDoc(doc, '_ADDRESSLINE', addressline)
             replaceInDoc(doc, '_AMOUNTNUM', locale.currency(amount))
             replaceInDoc(doc, '_AMOUNTINWORDS', amount_words)
             replaceInDoc(doc, '_DONATIONDATE', donation_date)
