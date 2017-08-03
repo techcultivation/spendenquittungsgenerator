@@ -1,6 +1,6 @@
 # spendenquittungsgenerator (donation receipt generator)
 
-`gen-receipt.py` is a Python script that takes an amount and address as input and generates a PDF/A donation receipt from a LibreOffice templace document, replacing variables in the document.
+`gen-receipt.py` is a Python script that takes an amount and address as input and generates a PDF/A donation receipt from a LibreOffice templace document, replacing variables in the document. It depends on ``python-uno``.
 
 It is currently optimized for the German legal requirements for donation receipts, e.g. it also converts the Euro amount into (German) words (`823.20 = Achthundertdreiundzwanzig Euro und zwanzig Cent`).
 
@@ -39,7 +39,7 @@ Options:
 Placeholder | Replaced by | Example
 --- | --- | ---
 _ADDRESSLINE | Address in one line, separated by commas | Walter Tevis, Samsaramstraße 44, 12999 Irgendwo
-_ADDRESSBOX | Address as multiple lines separated by newlines | "Walter Tevis\nSamsaramstraße 44\n12999 Irgendwo"
+_ADDRESSBOX | Address as multiple lines separated by newlines | Walter Tevis\nSamsaramstraße 44\n12999 Irgendwo
 _AMOUNTNUM | Amount in Euros | 203,30 €
 _AMOUNTINWORDS | Amount in German words | Zweihundertdrei Euro und dreißig Cent
 _DONATIONDATE | Date of donation reception | 3.8.2017
