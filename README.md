@@ -34,6 +34,8 @@ Options:
 * ``--template <template.odt>`` use a different template file as input (default: ``--template templates/single.odt``)
 * ``--outputfile <output.pdf>`` write to a different output file (will be overwritten if it exists) (default: ``--outputfile new.pdf``)
 
+Now, for additional greatness, we can digitally sign the PDF -- see notes at the end of this document.
+
 ## PLACEHOLDERS
 
 Placeholder | Replaced by | Example
@@ -53,5 +55,10 @@ Einundzwanzigtausendneunhunderteinundzwanzig Euro und zwanzig Cent
 
 ## TODO
 
-* refactor a few things
-* cryptographically sign PDFs
+* additional receipt types (Sachspende, Sammelbescheinigung)
+
+## Digitally sign PDF (notes)
+
+[JSignPDF](http://jsignpdf.sourceforge.net/) by Josef Cacek has not seen any release or activity since 2014, but it works. Almost the last place to get a certificate from seems to be [Comodo](https://www.comodo.com/home/email-security/free-email-certificate.php).
+
+    java -jar JSignPdf.jar -kst PKCS12 -ksf keyfile.p12 -ksp <password> new.pdf
