@@ -4,6 +4,8 @@
 
 It is currently optimized for the German legal requirements for donation receipts, e.g. it also converts the Euro amount into (German) words (`823.20 = Achthundertdreiundzwanzig Euro und zwanzig Cent`).
 
+Spendenquittungsgenerator: Spendenbescheinigungen für Vereine, Stiftungen usw. aus ODT-Vorlage generieren.
+
 ## gen-receipt.py
 
 We need a LibreOffice instance listening on port 2002:
