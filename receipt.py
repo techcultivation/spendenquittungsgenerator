@@ -11,11 +11,11 @@ LOGLEVEL = logging.INFO
 Example:
 
     ./receipt.py 203 "Hans Meier, Apfelstraße 24, 02199 Groden" 24.2.2014
-INFO:root:Validating inputs...
-INFO:root:Trying to connect to Libreoffice...
-INFO:root:Loading templates/single.odt...
-INFO:root:Replacing strings in templates/single.odt
-INFO:root:Writing to new.pdf...
+[2017-08-07 00:20:15,041] INFO [root.cli:110] Validating inputs
+[2017-08-07 00:20:15,044] INFO [root.cli:124] Trying to connect to Libreoffice at uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext
+[2017-08-07 00:20:15,055] INFO [root.cli:152] Loading templates/single.odt
+[2017-08-07 00:20:15,182] INFO [root.cli:162] Replacing strings in templates/single.odt
+[2017-08-07 00:20:15,220] INFO [root.cli:172] Writing to new.pdf
 
  by Moritz Bartl <moritz@headstrong.de>
 
@@ -37,6 +37,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+
+LOGFORMAT="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s"
 
 import string
 import getopt
@@ -105,7 +107,7 @@ def replaceInDoc(doc, old, new):
 def cli(amount, address, donation_date, template, outputfile, soffice_url):
     retVal = 0
     # validate optional donation date
-    logging.info('Validating inputs...')
+    logging.info('Validating inputs')
     try:
         donation_datetime = time.strptime(donation_date, '%d.%m.%Y')
     except ValueError:
@@ -147,7 +149,7 @@ def cli(amount, address, donation_date, template, outputfile, soffice_url):
 
         inProps = PropertyValue("Hidden", 0, True, 0),
 
-        logging.info("Loading " + DEFAULT_TEMPLATE + "...")
+        logging.info("Loading " + DEFAULT_TEMPLATE)
 
         fileUrl = absolutize(cwd, systemPathToFileUrl(DEFAULT_TEMPLATE))
         try:
@@ -167,26 +169,26 @@ def cli(amount, address, donation_date, template, outputfile, soffice_url):
             replaceInDoc(doc, '_DONATIONDATE', donation_date)
 
             destUrl = absolutize(cwd, systemPathToFileUrl(DEFAULT_OUTPUT))
-            logging.info("Writing to " + DEFAULT_OUTPUT + "...")
+            logging.info("Writing to " + DEFAULT_OUTPUT)
             doc.storeToURL(destUrl, outProps)
         except IOException as e:
-            sys.stderr.write("Error during conversion: " + e.Message + "\n")
+            logging.exception("Error during conversion: " + e.Message + "\n")
             retVal = 1
         except UnoException as e:
-            sys.stderr.write(
+            logging.exception(
                 "Error (" + repr(e.__class__) + ") during conversion:" + e.Message + "\n")
             retVal = 1
         if doc:
             doc.dispose()
 
     except UnoException as e:
-        sys.stderr.write(
+        logging.exception(
             "Error (" + repr(e.__class__) + ") :" + e.Message + "\n")
         retVal = 1
 
     sys.exit(retVal)
 
 if __name__ == '__main__':
-    logging.basicConfig(level=LOGLEVEL)
+    logging.basicConfig(level=LOGLEVEL,format=LOGFORMAT)
     locale.setlocale(locale.LC_MONETARY, ('de', 'utf-8'))
     cli()

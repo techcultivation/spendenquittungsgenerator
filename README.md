@@ -33,11 +33,11 @@ Example:
 
 ```bash
 ❯ ./receipt.py 203.30 "Hans Meier, Apfelstraße 24, 02199 Groden" 3.8.2017          
-INFO:root:Validating inputs...
-INFO:root:Trying to connect to Libreoffice...
-INFO:root:Loading templates/single.odt...
-INFO:root:Replacing strings in templates/single.odt
-INFO:root:Writing to new.pdf...
+2017-08-07 00:20:15,041] INFO [root.cli:110] Validating inputs
+2017-08-07 00:20:15,044] INFO [root.cli:124] Trying to connect to Libreoffice at uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext
+2017-08-07 00:20:15,055] INFO [root.cli:152] Loading templates/single.odt
+2017-08-07 00:20:15,182] INFO [root.cli:162] Replacing strings in templates/single.odt
+2017-08-07 00:20:15,220] INFO [root.cli:172] Writing to new.pdf
 ```
 
 Options:
