@@ -6,6 +6,15 @@ It is currently optimized for the German legal requirements for donation receipt
 
 Spendenquittungsgenerator: Spendenbescheinigungen für Vereine, Stiftungen usw. aus ODT-Vorlage generieren.
 
+## Install
+
+Might work on MacOSX and even Windows. Currently tested only on Debian.
+
+    git clone REPO_URL
+    virtualenv env
+    source env/bin/activate
+    pip install --editable .
+    
 ## receipt.py
 
 We need a LibreOffice instance listening on port 2002:
