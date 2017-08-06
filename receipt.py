@@ -101,7 +101,8 @@ def replaceInDoc(doc, old, new):
 @click.argument('donation_date', default=time.strftime('%d.%m.%Y'))
 @click.option('--template', '-t', type=click.Path(exists=True, file_okay=True, dir_okay=False), default=DEFAULT_TEMPLATE)
 @click.option('--outputfile', '-o', type=click.Path(exists=True, file_okay=True, dir_okay=False, writable=True), default=DEFAULT_OUTPUT)
-def cli(amount, address, donation_date, template, outputfile):
+@click.option('--soffice-url', '-u', default='uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext')
+def cli(amount, address, donation_date, template, outputfile, soffice_url):
     retVal = 0
     # validate optional donation date
     logging.info('Validating inputs...')
@@ -118,8 +119,7 @@ def cli(amount, address, donation_date, template, outputfile):
     addressline = ', '.join(address_split)
 
     try:
-        logging.info("Trying to connect to Libreoffice...")
-        url = "uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext"
+        logging.info("Trying to connect to Libreoffice at " + soffice_url)
         filterName = "writer_pdf_Export"
         extension = "pdf"
 
@@ -128,7 +128,7 @@ def cli(amount, address, donation_date, template, outputfile):
 
         resolver = smgrLocal.createInstanceWithContext(
             "com.sun.star.bridge.UnoUrlResolver", ctxLocal)
-        ctx = resolver.resolve(url)
+        ctx = resolver.resolve(soffice_url)
         smgr = ctx.ServiceManager
 
         desktop = smgr.createInstanceWithContext(
