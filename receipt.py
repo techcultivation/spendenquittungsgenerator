@@ -6,11 +6,11 @@ DEFAULT_TEMPLATE = "templates/single.odt"
 DEFAULT_OUTPUT = "new.pdf"
 LOGLEVEL = logging.INFO
 
-"""gen-receipt.py
+"""receipt.py
 
 Example:
 
-    ./gen-receipt.py 203 "Hans Meier, Apfelstraße 24, 02199 Groden" 24.2.2014
+    ./receipt.py 203 "Hans Meier, Apfelstraße 24, 02199 Groden" 24.2.2014
 INFO:root:Validating inputs...
 INFO:root:Trying to connect to Libreoffice...
 INFO:root:Loading templates/single.odt...
