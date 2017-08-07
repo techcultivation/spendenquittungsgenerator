@@ -8,9 +8,10 @@ Spendenquittungsgenerator: Spendenbescheinigungen für Vereine, Stiftungen usw. 
 
 ## Install
 
-Might work on MacOSX and even Windows. Currently tested only on Debian.
+Might work on MacOSX and even Windows. Currently tested only on Debian. You'll need LibreOffice and Python 3 on your system.
 
-    git clone REPO_URL
+    git clone https://github.com/moba/spendenquittungsgenerator.git
+    cd spendenquittungsgenerator
     virtualenv env
     source env/bin/activate
     pip install --editable .
@@ -71,15 +72,15 @@ The only required arguments are the amount (in Euros as float, eg. `100.50`) and
 
 Now, for additional greatness, we can digitally sign the PDF -- see notes at the end of this document.
 
-### PLACEHOLDERS
+### Placeholders
 
-Placeholder | Replaced by | Example
---- | --- | ---
-_ADDRESSLINE | Address in one line, separated by commas | Walter Tevis, Samsaramstraße 44, 12999 Irgendwo
-_ADDRESSBOX | Address as multiple lines separated by newlines | Walter Tevis\nSamsaramstraße 44\n12999 Irgendwo
-_AMOUNTNUM | Amount in Euros | 203,30 €
-_AMOUNTINWORDS | Amount in German words | Zweihundertdrei Euro und dreißig Cent
-_DONATIONDATE | Date of donation reception | 3.8.2017
+Placeholder      | Replaced by                                     | Example
+---------------- | ----------------------------------------------- | -------
+`_ADDRESSLINE`   | Address in one line, separated by commas        | Walter Tevis, Samsaramstraße 44, 12999 Irgendwo
+`_ADDRESSBOX`    | Address as multiple lines separated by newlines | Walter Tevis\nSamsaramstraße 44\n12999 Irgendwo
+`_AMOUNTNUM`     | Amount in Euros                                 | 203,30 €
+`_AMOUNTINWORDS` | Amount in German words                          | Zweihundertdrei Euro und dreißig Cent
+`_DONATIONDATE`  | Date of donation reception                      | 3.8.2017
 
 ## zahlwort.py: Convert float to amount in German words
 
@@ -92,8 +93,10 @@ Einundzwanzigtausendneunhunderteinundzwanzig Euro und zwanzig Cent
 
 * additional receipt types (Sachspende, Sammelbescheinigung)
 
-## Digitally sign PDF (notes)
+## Digitally sign PDF
 
 [JSignPDF](http://jsignpdf.sourceforge.net/) by Josef Cacek has not seen any release or activity since 2014, but it works. Almost the last place to get a certificate from seems to be [Comodo](https://www.comodo.com/home/email-security/free-email-certificate.php).
+
+Once you have received your certificate, you can use JSignPDF like this to sign your PDF file:
 
     java -jar JSignPdf.jar -kst PKCS12 -ksf keyfile.p12 -ksp <password> new.pdf
