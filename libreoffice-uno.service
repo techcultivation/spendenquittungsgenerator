@@ -13,6 +13,7 @@ RestartSec=5
 ExecStop=/usr/bin/pkill -F /var/run/soffice.pid
 PIDFile=/var/run/soffice.pid
 PrivateTmp=yes
+NoNewPrivileges=yes
 
 [Install]
 WantedBy=default.target
