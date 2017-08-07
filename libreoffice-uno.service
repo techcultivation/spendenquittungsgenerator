@@ -1,0 +1,18 @@
+## Thanks Étienne Deparis
+## https://etienne.depar.is/a-ecrit/post/2016/03/23/LibreOffice-Headless-with-systemd
+[Unit]
+Description=Control headless soffice instance
+After=network.target 
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/soffice --headless -env:UserInstallation=file:///tmp/libeoffice-uno \
+  --accept=socket,host=127.0.0.1,port=2002;urp; --display :5.0 \
+  --pidfile=/var/run/soffice.pid --nologo --nodefault --nofirststartwizard
+RestartSec=5
+ExecStop=/usr/bin/pkill -F /var/run/soffice.pid
+PIDFile=/var/run/soffice.pid
+PrivateTmp=yes
+
+[Install]
+WantedBy=default.target

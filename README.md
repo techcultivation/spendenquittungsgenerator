@@ -23,6 +23,13 @@ We need a LibreOffice instance listening on port 2002:
 
 (We use a custom UserInstallation directory to not confuse existing instances; it will be created [and reused]).
 
+This repository also contains a systemd service file to run LibreOffice as a daemon under the current user:
+
+    mkdir -p ~/.config/systemd/user
+    cp libreoffice-uno.service ~/.config/systemd/user
+    systemctl --user enable libreoffice-uno.service
+    systemctl --user start libreoffice-uno.service
+
 Now, we can generate a `new.pdf` based on `templates/simple.odt` with placeholders filled out:
 
     ./receipt.py amount address [donation_date] [--template TEMPLATE] [--outputfile OUT.PDF]
