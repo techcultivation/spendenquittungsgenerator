@@ -14,7 +14,7 @@ Might work on MacOSX and even Windows. Currently tested only on Debian.
     virtualenv env
     source env/bin/activate
     pip install --editable .
-    
+
 ## receipt.py
 
 We need a LibreOffice instance listening on port 2002:
@@ -32,11 +32,33 @@ This repository also contains a systemd service file to run LibreOffice as a dae
 
 Now, we can generate a `new.pdf` based on `templates/simple.odt` with placeholders filled out:
 
-    ./receipt.py amount address [donation_date] [--template TEMPLATE] [--outputfile OUT.PDF]
+```
+  > ./receipt.py --help
+  Usage: receipt.py [OPTIONS] AMOUNT ADDRESS [DONATION_DATE]
+
+  Produces German PDF/A donation receipts from LibreOffice Writer .odt
+  templates. See README.md for usage.
+
+  AMOUNT           the donation amount in Euro (float; example: 292.20)
+  ADDRESS          postal mail address of the donor (example: "Moritz Bartl, Gottschedstrasse 4, 13357 Berlin")
+  [DONATION_DATE]  date of donation arrival (example: 24.12.2048)
+
+Options:
+  -t, --template PATH     use a different odt template file as input (default:
+                          --template template.odt.odt)
+  -o, --outputfile PATH   write to a different output file (will be
+                          overwritten if it exists) (default: --outputfile
+                          new.pdf)
+  -u, --soffice-url TEXT  LibreOffice connection string (default: --soffice-
+                          url uno:socket,host=localhost<Plug>PeepOpenort=2002;
+                          urp;StarOffice.ComponentContext)
+  --help                  Show this message and exit.
+
+```
 
 The only required arguments are the amount (in Euros as float, eg. `100.50`) and address data of the donor (required in Germany) separated by commas and enclosed by quotation marks (eg. `"Walter Tevis, Samsaramstraße 44, 12999 Irgendwo"`). The third, optional argument is the date of the donation (default: current date).
 
-Example:
+### Example
 
 ```bash
 ❯ ./receipt.py 203.30 "Hans Meier, Apfelstraße 24, 02199 Groden" 3.8.2017          
@@ -47,15 +69,9 @@ Example:
 [2017-08-07 00:20:15,220] INFO [root.cli:172] Writing to new.pdf
 ```
 
-Options:
-
-* ``--template <template.odt>`` use a different template file as input (default: ``--template template.odt``)
-* ``--outputfile <output.pdf>`` write to a different output file (will be overwritten if it exists) (default: ``--outputfile new.pdf``)
-* ``--soffice-url <url>`` to change the LibreOffice connection string (default: ``--soffice-url uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext``)
-
 Now, for additional greatness, we can digitally sign the PDF -- see notes at the end of this document.
 
-## PLACEHOLDERS
+### PLACEHOLDERS
 
 Placeholder | Replaced by | Example
 --- | --- | ---

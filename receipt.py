@@ -39,6 +39,7 @@ THE SOFTWARE.
 """
 
 LOGFORMAT="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s"
+SOFFICE_URL='uno:socket,host=localhost<Plug>PeepOpenort=2002;urp;StarOffice.ComponentContext'
 
 import string
 import getopt
@@ -101,10 +102,17 @@ def replaceInDoc(doc, old, new):
 @click.argument('amount', type=float)
 @click.argument('address')
 @click.argument('donation_date', default=time.strftime('%d.%m.%Y'))
-@click.option('--template', '-t', type=click.Path(exists=True, file_okay=True, dir_okay=False), default=DEFAULT_TEMPLATE)
-@click.option('--outputfile', '-o', type=click.Path(exists=True, file_okay=True, dir_okay=False, writable=True), default=DEFAULT_OUTPUT)
-@click.option('--soffice-url', '-u', default='uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext')
+@click.option('--template', '-t', type=click.Path(exists=True, file_okay=True, dir_okay=False), default=DEFAULT_TEMPLATE, help="use a different odt template file as input (default: --template " + DEFAULT_TEMPLATE + ".odt)")
+@click.option('--outputfile', '-o', type=click.Path(exists=True, file_okay=True, dir_okay=False, writable=True), default=DEFAULT_OUTPUT, help="write to a different output file (will be overwritten if it exists) (default: --outputfile " + DEFAULT_OUTPUT + ")")
+@click.option('--soffice-url', '-u', default=SOFFICE_URL, help="LibreOffice connection string (default: --soffice-url " + SOFFICE_URL + ")")
 def cli(amount, address, donation_date, template, outputfile, soffice_url):
+    """Produces German PDF/A donation receipts from LibreOffice Writer .odt templates. See README.md for usage.
+
+    \b
+    AMOUNT           the donation amount in Euro (float; example: 292.20)
+    ADDRESS          postal mail address of the donor (example: "Moritz Bartl, Gottschedstrasse 4, 13357 Berlin")
+    [DONATION_DATE]  date of donation arrival (example: 24.12.2048)
+    """
     retVal = 0
     # validate optional donation date
     logging.info('Validating inputs')
