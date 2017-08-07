@@ -35,14 +35,14 @@ Example:
 ❯ ./receipt.py 203.30 "Hans Meier, Apfelstraße 24, 02199 Groden" 3.8.2017          
 [2017-08-07 00:20:15,041] INFO [root.cli:110] Validating inputs
 [2017-08-07 00:20:15,044] INFO [root.cli:124] Trying to connect to Libreoffice at uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext
-[2017-08-07 00:20:15,055] INFO [root.cli:152] Loading templates/single.odt
-[2017-08-07 00:20:15,182] INFO [root.cli:162] Replacing strings in templates/single.odt
+[2017-08-07 00:20:15,055] INFO [root.cli:152] Loading template.odt
+[2017-08-07 00:20:15,182] INFO [root.cli:162] Replacing strings in template.odt
 [2017-08-07 00:20:15,220] INFO [root.cli:172] Writing to new.pdf
 ```
 
 Options:
 
-* ``--template <template.odt>`` use a different template file as input (default: ``--template templates/single.odt``)
+* ``--template <template.odt>`` use a different template file as input (default: ``--template template.odt``)
 * ``--outputfile <output.pdf>`` write to a different output file (will be overwritten if it exists) (default: ``--outputfile new.pdf``)
 * ``--soffice-url <url>`` to change the LibreOffice connection string (default: ``uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext``)
 

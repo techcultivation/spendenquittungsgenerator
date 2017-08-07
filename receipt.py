@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-DEFAULT_TEMPLATE = "templates/single.odt"
+DEFAULT_TEMPLATE = "template.odt"
 DEFAULT_OUTPUT = "new.pdf"
 LOGLEVEL = logging.INFO
 
@@ -13,8 +13,8 @@ Example:
     ./receipt.py 203 "Hans Meier, Apfelstraße 24, 02199 Groden" 24.2.2014
 [2017-08-07 00:20:15,041] INFO [root.cli:110] Validating inputs
 [2017-08-07 00:20:15,044] INFO [root.cli:124] Trying to connect to Libreoffice at uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext
-[2017-08-07 00:20:15,055] INFO [root.cli:152] Loading templates/single.odt
-[2017-08-07 00:20:15,182] INFO [root.cli:162] Replacing strings in templates/single.odt
+[2017-08-07 00:20:15,055] INFO [root.cli:152] Loading template.odt
+[2017-08-07 00:20:15,182] INFO [root.cli:162] Replacing strings in template.odt
 [2017-08-07 00:20:15,220] INFO [root.cli:172] Writing to new.pdf
 
  by Moritz Bartl <moritz@headstrong.de>
