@@ -19,7 +19,7 @@ Might work on MacOSX and even Windows. Currently tested only on Debian.
 
 We need a LibreOffice instance listening on port 2002:
 
-    soffice --accept="socket,host=localhost<Plug>PeepOpenort=2002;urp;" --norestore --nologo --nodefault --headless -env:UserInstallation=file:///tmp/spendenquittungsgenerator
+    soffice --accept="socket,host=localhost,port=2002;urp;" --norestore --nologo --nodefault --headless -env:UserInstallation=file:///tmp/spendenquittungsgenerator
 
 (We use a custom UserInstallation directory to not confuse existing instances; it will be created [and reused]).
 
@@ -44,7 +44,7 @@ Options:
 
 * ``--template <template.odt>`` use a different template file as input (default: ``--template template.odt``)
 * ``--outputfile <output.pdf>`` write to a different output file (will be overwritten if it exists) (default: ``--outputfile new.pdf``)
-* ``--soffice-url <url>`` to change the LibreOffice connection string (default: ``uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext``)
+* ``--soffice-url <url>`` to change the LibreOffice connection string (default: ``--soffice-url uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext``)
 
 Now, for additional greatness, we can digitally sign the PDF -- see notes at the end of this document.
 
