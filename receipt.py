@@ -39,7 +39,7 @@ THE SOFTWARE.
 """
 
 LOGFORMAT="[%(asctime)s] %(levelname)s [%(name)s.%(funcName)s:%(lineno)d] %(message)s"
-SOFFICE_URL='uno:socket,host=localhost<Plug>PeepOpenort=2002;urp;StarOffice.ComponentContext'
+SOFFICE_URL='uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext'
 
 import string
 import getopt
