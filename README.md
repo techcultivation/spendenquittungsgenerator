@@ -40,9 +40,12 @@ Now, we can generate a `new.pdf` based on `templates/simple.odt` with placeholde
   Produces German PDF/A donation receipts from LibreOffice Writer .odt
   templates. See README.md for usage.
 
-  AMOUNT           the donation amount in Euro (float; example: 292.20)
-  ADDRESS          postal mail address of the donor (example: "Moritz Bartl, Gottschedstrasse 4, 13357 Berlin")
-  [DONATION_DATE]  date of donation arrival (example: 24.12.2048)
+  AMOUNT           the donation amount in Euro [float]
+  ADDRESS          postal mail address of the donor [in quotes]
+  [DONATION_DATE]  date of donation arrival [optional]
+
+  example: receipt.py 292.20 "Moritz Bartl, Gottschedstrasse 4, 13357
+  Berlin" 24.12.2018
 
 Options:
   -t, --template PATH     use a different odt template file as input (default:
@@ -51,8 +54,8 @@ Options:
                           overwritten if it exists) (default: --outputfile
                           new.pdf)
   -u, --soffice-url TEXT  LibreOffice connection string (default: --soffice-
-                          url uno:socket,host=localhost<Plug>PeepOpenort=2002;
-                          urp;StarOffice.ComponentContext)
+                          url uno:socket,host=localhost,port=2002;urp;StarOffi
+                          ce.ComponentContext)
   --help                  Show this message and exit.
 
 ```

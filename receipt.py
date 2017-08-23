@@ -109,9 +109,11 @@ def cli(amount, address, donation_date, template, outputfile, soffice_url):
     """Produces German PDF/A donation receipts from LibreOffice Writer .odt templates. See README.md for usage.
 
     \b
-    AMOUNT           the donation amount in Euro (float; example: 292.20)
-    ADDRESS          postal mail address of the donor (example: "Moritz Bartl, Gottschedstrasse 4, 13357 Berlin")
-    [DONATION_DATE]  date of donation arrival (example: 24.12.2048)
+    AMOUNT           the donation amount in Euro [float]
+    ADDRESS          postal mail address of the donor [in quotes]
+    [DONATION_DATE]  date of donation arrival [optional]
+
+    example: receipt.py 292.20 "Moritz Bartl, Gottschedstrasse 4, 13357 Berlin" 24.12.2018
     """
     retVal = 0
     # validate optional donation date
