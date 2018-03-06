@@ -159,9 +159,9 @@ def cli(amount, address, donation_date, template, outputfile, soffice_url):
 
         inProps = PropertyValue("Hidden", 0, True, 0),
 
-        logging.info("Loading " + DEFAULT_TEMPLATE)
+        logging.info("Loading " + template)
 
-        fileUrl = absolutize(cwd, systemPathToFileUrl(DEFAULT_TEMPLATE))
+        fileUrl = absolutize(cwd, systemPathToFileUrl(template))
         try:
             doc = desktop.loadComponentFromURL(fileUrl, "_blank", 0, inProps)
 
@@ -169,7 +169,7 @@ def cli(amount, address, donation_date, template, outputfile, soffice_url):
                 raise UnoException(
                     "Couldn't open stream for unknown reason", None)
 
-            logging.info('Replacing strings in ' + DEFAULT_TEMPLATE)
+            logging.info('Replacing strings in ' + template)
 
             replaceInDoc(doc, '_ADDRESSBOX', addressee)
 
